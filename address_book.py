@@ -2,15 +2,25 @@ from collections import UserDict
 
 
 class Filed:
+    """
+    родительский класс всех полей
+    поле для ввода новых данных в записную книгу
+    """
     def __init__(self, value: str) -> None:
         self.value = value
 
 
 class Name(Filed):
+    """
+    поле имени, принимает любую стр без проверки
+    """
     def __init__(self, value: str) -> None:
         super().__init__(value)
 
 class Phone(Filed):
+    """
+    поле номера телефона, принимает стр(только цифри)
+    """
     def __init__(self, value: str) -> None:
         if value.isdigit():
             super().__init__(value)
@@ -19,7 +29,13 @@ class Phone(Filed):
 
 
 class Record:
-    def __init__(self, name: Name, *phones: list[Phone]) -> None:
+    """
+    класс которий содержит в себе все поля и методи работи с ними
+    сейчас простая реализация add/remove/change phone 
+    """
+    #TODO будут правки по методам по мере расширения и уточнения 
+    
+    def __init__(self, name: Name, *phones) -> None:
         self.name = name
         self.phones = list(phones)
 
@@ -35,6 +51,10 @@ class Record:
          
     
 class AddressBook(UserDict):
+    """
+    класс хранилише записной книги  - словарь
+    "имя" : обьект рекорд которий содержит все поля(и методи) в соответствии с этим именем 
+    """
     def __init__(self):
         self.data = {}
 
@@ -45,7 +65,7 @@ class AddressBook(UserDict):
 
 
 if __name__ == '__main__':
-
+    
     name = Name('Bill')
     phone = Phone('1234567890')
     rec = Record(name, phone)
@@ -58,7 +78,7 @@ if __name__ == '__main__':
     assert isinstance(ab['Bill'].phones[0], Phone)
     assert ab['Bill'].phones[0].value == '1234567890'
     
-    print('All Ok)')        
+    print('All Ok)')  
 
 
 
