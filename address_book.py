@@ -43,11 +43,19 @@ class Record:
         self.phones.append(phone)
 
     def remove_phone(self, phone: Phone):
-        self.phones.remove(phone)
-
+        if phone in self.phones:
+            self.phones.remove(phone)
+        else:
+            raise ValueError(f"The phone '{phone.value}' is not in the record.")
+    
     def change_phone(self, old_phone: Phone, new_phone : Phone):
-        self.remove_phone(old_phone)
-        self.add_phone(new_phone)
+        if old_phone in self.phones: # если номер входит получаем индекс 
+            index = self.phones.index(old_phone)
+            if not isinstance(new_phone, Phone):
+                raise ValueError("Phone must be an instance of the Phone class.")
+            self.phones[index] = new_phone
+        else:
+            raise ValueError(f"The phone '{old_phone.value}' is not in the record.")
          
     
 class AddressBook(UserDict):
